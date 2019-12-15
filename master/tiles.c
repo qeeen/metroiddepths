@@ -5,7 +5,7 @@
 unsigned char chunks[7680];
 unsigned char* map[4096];
 
-int worldx = 144;
+int worldx = 0;
 int worldy = 0;
 
 int* grab_sprites(){
@@ -16,11 +16,11 @@ int* grab_sprites(){
 
 	for(int y = 0; y < 16; y++){
 		for(int x = 0; x < 17; x++){
-			int tilex = x*16 - worldx_offset;
-			int tiley = y*16 - worldy_offset;
+			int tilex = 16*x - worldx_offset;
+			int tiley = 16*y - worldy_offset;
 			sprites[(x+(y*17))*3] = tilex;
 			sprites[((x+(y*17))*3) + 1] = tiley;
-			sprites[((x+(y*17))*3) + 2] = (int)grab_tile(worldx+x*16, (worldy+y)*17*16);
+			sprites[((x+(y*17))*3) + 2] = (x+y+((worldx/16+worldy/16)%2)) % 2 == 1 ? 1 : 0;//(int)grab_tile(worldx+tilex, worldy+tiley);
 		}
 	}
 
@@ -39,13 +39,15 @@ int is_solid(int xpos, int ypos){
 }
 
 unsigned char grab_tile(int xpos, int ypos){	
-	int cxpos = xpos/256;
-	int cypos = ypos/240;
+	int cxpos = (int)(xpos/256);
+	int cypos = (int)(ypos/240);
 	int rxpos = xpos%256;
 	int rypos = ypos%240;
 
+	//printf("%d\n", cxpos);
+	
 	unsigned char *chunk = map[cxpos + 64*cypos];
-	unsigned char tile = chunk[rxpos + 16*rypos];
+	unsigned char tile = *(chunk + rxpos + 16*rypos);
 	return tile;
 }
 
@@ -69,6 +71,7 @@ void test_init(){
 	}
 	for(int i = 0; i < 4096; i++){
 		map[i] = (i % 2) ? chunks : chunks + 240;
+		printf("%d", (i % 2) ? *(chunks) : *(chunks + 240));
 	}
 }
 

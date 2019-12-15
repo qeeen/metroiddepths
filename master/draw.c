@@ -18,6 +18,7 @@ int * byte_color(int color){
 	int r = (bits[0]*1 + bits[1]*2 + bits[2]*4 + bits[3]*8 + bits[4]*16)*8;
 	int g = (bits[5]*1 + bits[6]*2 + bits[7]*4 + bits[8]*8 + bits[9]*16)*8;
 	int b = (bits[10]*1 + bits[11]*2 + bits[12]*4 + bits[13]*8 + bits[14]*16)*8;
+	free(bits);
 	static int rgb[3];
 	rgb[0] = r;
 	rgb[1] = g;

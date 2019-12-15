@@ -1,3 +1,5 @@
-empty for now
+/// KNOWN BUGS ///  
+grabsprites grabtile call is incorrect
 
-it dont know what im really doing
+/// DEPS ///
+SDL2

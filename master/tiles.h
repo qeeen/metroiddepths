@@ -4,8 +4,8 @@
 //unsigned char chunks[7680]; 32 16*15 chunks, msb is solidity
 //unsigned char* map[4096]; 64*64 pointers to chunks
 
-//int worldx;
-//int worldy;
+int worldx;
+int worldy;
 
 int* grab_sprites();
 
