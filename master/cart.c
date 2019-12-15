@@ -11,16 +11,16 @@ int* cartmain(int* inputs){
 
 	
 	if(*(inputs+2)){
-		worldx+=1;
+		worldx+=2;
 	}
 	if(*(inputs+1)){
-		worldx-=1;
+		worldx-=2;
 	}
 	if(*(inputs+3)){
-		worldy-=1;
+		worldy-=2;
 	}
 	if(*(inputs+4)){
-		worldy+=1;
+		worldy+=2;
 	}
 	
 	if(!inityet){

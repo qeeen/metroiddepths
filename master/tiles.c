@@ -20,7 +20,8 @@ int* grab_sprites(){
 			int tiley = 16*y - worldy_offset;
 			sprites[(x+(y*17))*3] = tilex;
 			sprites[((x+(y*17))*3) + 1] = tiley;
-			sprites[((x+(y*17))*3) + 2] = (x+y+((worldx/16+worldy/16)%2)) % 2 == 1 ? 1 : 0;//(int)grab_tile(worldx+tilex, worldy+tiley);
+			//int dbug_tile = (x+y+((worldx/16+worldy/16)%2)) % 2 == 1 ? 1 : 0;
+			sprites[((x+(y*17))*3) + 2] = grab_tile(worldx+x*16, worldy+y*16);
 		}
 	}
 
@@ -41,8 +42,8 @@ int is_solid(int xpos, int ypos){
 unsigned char grab_tile(int xpos, int ypos){	
 	int cxpos = (int)(xpos/256);
 	int cypos = (int)(ypos/240);
-	int rxpos = xpos%256;
-	int rypos = ypos%240;
+	int rxpos = xpos/16;
+	int rypos = ypos/16;
 
 	//printf("%d\n", cxpos);
 	

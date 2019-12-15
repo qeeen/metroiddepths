@@ -21,17 +21,16 @@ void update_gamescreen(int* sprite_list){
 			printf("%d\n%d\n\n", x, y);
 		}
 		for(int r = 0; r < 16; r++){
-			if(y + r < 0){
+			if(y+r < 0 || y+r > 239){
 				continue;
 			}
 			for(int c = 0; c < 16; c++){
-				if(tile == 1){
-					if(x+c < 0){
-						continue;
-					}
+				if(x+c < 0 || x+c > 255){
+					continue;
+				} else if(tile == 1){
 					gameScreen[x+c + (y+r)*256] = 0x311F;
 				} else {
-					//gameScreen[x+c + (y+r)*256] = 0x33E8;
+					gameScreen[x+c + (y+r)*256] = 0x33E8;
 				}
 			}
 		}
