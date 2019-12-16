@@ -1,3 +1,4 @@
+#include "globals.h"
 #include "draw.h"
 #include "stdnes.h"
 #include "cart.h"
@@ -5,13 +6,14 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-int gameScreen[256 * 240];
+int gamescreen[SCREEN_WIDTH * SCREEN_HEIGHT];
+int spritesheet[SPRITESHEET_DIM*SPRITESHEET_DIM * SPRITE_DIM*SPRITE_DIM];//64*64 grid of 8*8 sprites
+int palettes[PALETTE_COUNT * PALETTE_SIZE];//16 4 color palettes
 
 void update_gamescreen(int* sprite_list){
-	for(int i = 0; i < 256*240; i++){
-		gameScreen[i] = 0x0000;
+	for(int i = 0; i < SCREEN_WIDTH*SCREEN_HEIGHT; i++){
+		gamescreen[i] = 0x0000;
 	}
-
 
 	for(int i = 0; i < 816; i+=3){
 		int x = *(sprite_list+i);
@@ -19,17 +21,17 @@ void update_gamescreen(int* sprite_list){
 		int tile = *(sprite_list+i+2);
 
 		for(int r = 0; r < 16; r++){
-			if(y+r < 0 || y+r > 239){
+			if(y+r < 0 || y+r > SCREEN_HEIGHT-1){
 				continue;
 			}
 
 			for(int c = 0; c < 16; c++){
-				if(x+c < 0 || x+c > 255){
+				if(x+c < 0 || x+c > SCREEN_WIDTH-1){
 					continue;
 				} else if(tile == 1){
-					gameScreen[x+c + (y+r)*256] = 0x311F;
+					gamescreen[x+c + (y+r)*SCREEN_WIDTH] = 0x311F;
 				} else {
-					gameScreen[x+c + (y+r)*256] = 0x33E8;
+					gamescreen[x+c + (y+r)*SCREEN_WIDTH] = 0x33E8;
 				}
 			}
 		}
@@ -38,18 +40,18 @@ void update_gamescreen(int* sprite_list){
 
 int main(int argc, char *argv[]){
 	draw_init();
-	int* inputflags;
+	int* inputs;
 	int* spritebox;
 
-	cart_init();//user defined init
+	cart_init(spritesheet, palettes);//user defined init
 	while(1){
-		inputflags = handle_input();
-		if(inputflags[0] == 1){
+		inputs = handle_input();
+		if(inputs[0] == 1){
 			break;
 		}
-		spritebox = cartmain(inputflags);//user defined main (takes array of inputs, spits out array of spritedata)
+		spritebox = cartmain(spritesheet, palettes, inputs);
 		update_gamescreen(spritebox);
-		draw_loop(gameScreen);
+		draw_loop(gamescreen);
 		free(spritebox);
 	}
 	draw_destruct();

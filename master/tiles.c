@@ -1,9 +1,10 @@
+#include "globals.h"
 #include "tiles.h"
 #include <stdlib.h>
 #include <stdio.h>
 
-unsigned char chunks[7680];
-unsigned char* map[4096];
+unsigned char chunks[CHUNK_COUNT * (SCREEN_WIDTH/16)*(SCREEN_HEIGHT/16)];
+unsigned char* map[MAP_DIM * MAP_DIM];
 
 int worldx = 0;
 int worldy = 0;
@@ -33,10 +34,10 @@ int* grab_sprites(){
 }
 
 int is_solid(int xpos, int ypos){
-	int cxpos = xpos/256;
-	int cypos = ypos/240;
-	int rxpos = xpos%256;
-	int rypos = ypos%240;
+	int cxpos = xpos/SCREEN_WIDTH;
+	int cypos = ypos/SCREEN_HEIGHT;
+	int rxpos = xpos%SCREEN_WIDTH;
+	int rypos = ypos%SCREEN_HEIGHT;
 
 	unsigned char *chunk = map[cxpos + 64*cypos];
 	unsigned char tile = chunk[rxpos + 16*rypos];
@@ -44,10 +45,10 @@ int is_solid(int xpos, int ypos){
 }
 
 unsigned char grab_tile(int xpos, int ypos){
-	int cxpos = (int)(xpos/256);
-	int cypos = (int)(ypos/240);
-	int rxpos = (xpos%256)/16;
-	int rypos = (ypos%240)/15;
+	int cxpos = (int)(xpos/SCREEN_WIDTH);
+	int cypos = (int)(ypos/SCREEN_HEIGHT);
+	int rxpos = (xpos%SCREEN_WIDTH)/16;
+	int rypos = (ypos%SCREEN_HEIGHT)/16;
 
 	unsigned char *chunk = map[cxpos + 64*cypos];
 	unsigned char tile = *(chunk + rxpos + 16*rypos);
@@ -74,7 +75,6 @@ void test_init(){
 	}
 	for(int i = 0; i < 4096; i++){
 		map[i] = ((i + i/64) % 2) ? chunks : chunks + 240;
-		printf("%d", (i % 2) ? *(chunks) : *(chunks + 240));
 	}
 }
 

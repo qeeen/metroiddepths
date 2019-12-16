@@ -4,12 +4,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int cart_init(){
+int cart_init(int* spritesheet, int* palettes){
     test_init();
     return 0;
 }
 
-int* cartmain(int* inputs){
+int* cartmain(int* spritesheet, int* palettes, int* inputs){
 	int *spritebox;//816
 
 	int dbug_cam_spd = 2;
