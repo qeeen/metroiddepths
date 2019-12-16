@@ -4,29 +4,29 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int inityet = 0;
+int cart_init(){
+    test_init();
+    return 0;
+}
 
 int* cartmain(int* inputs){
 	int *spritebox;//816
 
-	
+	int dbug_cam_spd = 2;
+
 	if(*(inputs+2)){
-		worldx+=2;
+		worldx += dbug_cam_spd;
 	}
 	if(*(inputs+1)){
-		worldx-=2;
+		worldx -= dbug_cam_spd;
 	}
 	if(*(inputs+3)){
-		worldy-=2;
+		worldy -= dbug_cam_spd;
 	}
 	if(*(inputs+4)){
-		worldy+=2;
+		worldy += dbug_cam_spd;
 	}
 	
-	if(!inityet){
-		test_init();
-		inityet = 1;
-	}
 	spritebox = grab_sprites();
 
 	return spritebox;

@@ -1,8 +1,5 @@
 /// KNOWN BUGS ///  
-chunks are disjointed  
-not all chunks are appearing(any below the first two rows)  
-top and bottom tile row are glitchy  
-  
+error in drawing bottom row of each chunk (only draws if worldy is multiple of 16)   
   
 /// DEPS ///  
 SDL2  
