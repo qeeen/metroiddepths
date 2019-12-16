@@ -45,7 +45,7 @@ void update_gamescreen(int* sprite_list){
 	*/
 }
 
-int main(void){
+int main(int argc, char *argv[]){
 	draw_init();
 	int* inputflags;
 	int* spritebox;

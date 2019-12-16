@@ -1,6 +1,7 @@
 #ifndef DRAW_H
 #define DRAW_H
 
+#define SDL_MAIN_HANDLED
 #include <SDL2/SDL.h>
 #include "stdnes.h"
 
