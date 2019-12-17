@@ -1,4 +1,4 @@
-#include "img.h"
+#include "load.h"
 #include <stdlib.h>
 
 int* get_pixels(){
@@ -30,6 +30,7 @@ int* get_pixels(){
 	}
 
 	SDL_FreeSurface(sheet);
+	IMG_Quit();
 	return greyscale;
 }
 

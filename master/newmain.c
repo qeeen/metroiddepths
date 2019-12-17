@@ -7,7 +7,7 @@
 #include <stdio.h>
 
 int gamescreen[SCREEN_WIDTH * SCREEN_HEIGHT];
-int spritesheet[SPRITESHEET_DIM*SPRITESHEET_DIM * SPRITE_DIM*SPRITE_DIM];//64*64 grid of 8*8 sprites
+int* spritesheet;//[SPRITESHEET_DIM*SPRITESHEET_DIM * SPRITE_DIM*SPRITE_DIM] 64*64 grid of 8*8 sprites
 int palettes[PALETTE_COUNT * PALETTE_SIZE];//16 4 color palettes
 
 void update_gamescreen(int* sprite_list){
@@ -54,6 +54,7 @@ int main(int argc, char *argv[]){
 		draw_loop(gamescreen);
 		free(spritebox);
 	}
+	free(spritesheet);
 	draw_destruct();
 	return 0;
 }

@@ -33,9 +33,16 @@ void draw_pixel(int x, int y, int r, int g, int b){
 }
 
 void draw_15bit_pixel(int x, int y, int color){
-	int *rgb = byte_color(color);
-	SDL_SetRenderDrawColor(renderer, rgb[0], rgb[1], rgb[2], 255);
-	SDL_RenderDrawPoint(renderer, x, y);
+	int *rgb = byte_color(color);	
+	unsigned char* pixels = screenarr->pixels;
+	
+	*(pixels + x*4 + (y*4)*SCREEN_WIDTH*SCALE) = rgb[0];
+	*(pixels + x*4 + (y*4)*SCREEN_WIDTH*SCALE+1) = rgb[1];
+	*(pixels + x*4 + (y*4)*SCREEN_WIDTH*SCALE+2) = rgb[2];
+	*(pixels + x*4 + (y*4)*SCREEN_WIDTH*SCALE+3) = 255;
+
+	//SDL_SetRenderDrawColor(renderer, rgb[0], rgb[1], rgb[2], 255);
+	//SDL_RenderDrawPoint(renderer, x, y);
 	//draw_pixel(x, y, rgb[0], rgb[1], rgb[2]);
 }
 
@@ -53,10 +60,12 @@ void draw_init(){
 	SDL_Init(SDL_INIT_VIDEO);
 	//IMG_Init(IMG_INIT_PNG);
 
-	window = SDL_CreateWindow("SDL2 Dispalying Image",
-		SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 256, 240, 0);
-
+	window = SDL_CreateWindow("gaem",
+		SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH*SCALE, SCREEN_HEIGHT*SCALE, 0);
+	
 	renderer = SDL_CreateRenderer(window, -1, 0);
+	//screenarr = SDL_GetWindowSurface(window);
+	screenarr = SDL_CreateRGBSurface(0, SCREEN_WIDTH*SCALE, SCREEN_HEIGHT*SCALE, 32, 0, 0, 0, 0);
 }
 
 int* handle_input(){
@@ -132,24 +141,49 @@ int* handle_input(){
 }
 
 void draw_loop(int *screen){
+	SDL_LockSurface(screenarr);
 	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
 	SDL_RenderClear(renderer);
 
-	for(int i = 0; i < 240; i++){
-		for(int k = 0; k < 256; k++){
-			draw_15bit_pixel(k, i, screen[k + i*256]);
+	printf("%d\n", SDL_GetTicks());
+
+	for(int i = 0; i < SCREEN_HEIGHT; i++){
+		for(int k = 0; k < SCREEN_WIDTH; k++){
+			for(int px = 0; px < SCALE; px++){
+				for(int py = 0; py < SCALE; py++){
+					draw_15bit_pixel(k*SCALE+px, i*SCALE+py, screen[k + i*SCREEN_WIDTH]);
+					//unsigned char* pixels = screenarr->pixels;
+					//printf("%d, %d, %d, %d\n", *(pixels), *(pixels+1), *(pixels+2), *(pixels+3));
+				}
+			}
 		}
 	}
+	SDL_UnlockSurface(screenarr);
 
+	printf("%d\n\n", SDL_GetTicks());
+	/*
+	SDL_Surface* winsurface = SDL_GetWindowSurface(window);
+	SDL_BlitSurface(screenarr, NULL, winsurface, NULL);
+	SDL_UpdateWindowSurface(window);
+	*/
+	SDL_Texture* tex = SDL_CreateTextureFromSurface(renderer, screenarr);
+	SDL_RenderCopy(renderer, tex, NULL, NULL);
+	SDL_DestroyTexture(tex);
 	SDL_RenderPresent(renderer);
-	
+
+	//printf("%d\n", timeleft());
+
 	SDL_Delay(timeleft());
-	next_time += tick_interval;	
+	if(timeleft() == 0){
+		next_time = SDL_GetTicks();
+	}
+	next_time += tick_interval;
 }
 
 void draw_destruct(){	
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
+	SDL_FreeSurface(screenarr);
 
 	//IMG_Quit();
 	SDL_Quit();

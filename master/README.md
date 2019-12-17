@@ -1,5 +1,5 @@
 /// KNOWN BUGS ///  
-none currently  
+not a really a bug, but runs real slow when upscaled  
   
 /// DEPS ///  
 SDL2  

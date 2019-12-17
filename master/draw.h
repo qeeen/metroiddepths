@@ -3,18 +3,20 @@
 
 #define SDL_MAIN_HANDLED
 #include <SDL2/SDL.h>
+#include "globals.h"
 #include "stdnes.h"
 
 /// VARIABLES ///
 
 //TIME KEEPING//
-#define tick_interval 30
+#define tick_interval 33
 static unsigned int next_time;
 
 //WINDOW STUFF//
 SDL_Event event;
 SDL_Window * window;
 SDL_Renderer * renderer;
+SDL_Surface * screenarr;
 
 /// FUNCTIONS ///
 
