@@ -6,6 +6,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+dyna* testsprite = NULL;
+dyna* dynaarr[1];
+
 int cart_init(int* spritesheet, int* palettes){
 	spritesheet = get_pixels();
 
@@ -17,12 +20,20 @@ int cart_init(int* spritesheet, int* palettes){
 	set_tile(0, spritesheet + 32, palettes);
 	set_tile(1, spritesheet + 16, palettes);
 
+	testsprite = malloc(sizeof(dyna));
+	testsprite->x = 128;
+	testsprite->y = 128;
+	testsprite->img = spritesheet+16;
+	testsprite->pal = palettes;
+
+	dynaarr[0] = testsprite;
+
 	test_init();
 	return 0;
 }
 
 int* cartmain(int* spritesheet, int* palettes, int* inputs){
-	int *spritebox;//816
+	int *spritebox;//818
 
 	int dbug_cam_spd = 1;
 
@@ -40,6 +51,13 @@ int* cartmain(int* spritesheet, int* palettes, int* inputs){
 	}
 	
 	spritebox = grab_sprites();
+
+	//this code needs to be moved, realloc is slow
+	*(spritebox + 1) = 1;
+	spritebox = realloc(spritebox, sizeof(int)*(*(spritebox + 0)*3 + *(spritebox + 1)*3 + 2));
+	*(spritebox + *(spritebox+0)*3 + 2 + 0) = testsprite->x;
+	*(spritebox + *(spritebox+0)*3 + 2 + 0) = testsprite->y;
+	*(spritebox + *(spritebox+0)*3 + 2 + 0) = 4;
 
 	return spritebox;
 }

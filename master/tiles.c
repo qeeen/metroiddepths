@@ -14,20 +14,20 @@ int* grab_sprites(){
 	if(worldx < 0) {worldx = 0;}
 	if(worldy < 0) {worldy = 0;}
 	
-
-	int *sprites = malloc(816 * sizeof(int));
+	int *sprites = malloc(818 * sizeof(int));
 	
 	int worldx_offset = worldx%16;
 	int worldy_offset = worldy%16;
 
+	sprites[0] = 272;
 
 	for(int y = 0; y < 16; y++){
 		for(int x = 0; x < 17; x++){
 			int tilex = 16*x - worldx_offset;
 			int tiley = 16*y - worldy_offset;
-			sprites[(x+(y*17))*3] = tilex;
-			sprites[((x+(y*17))*3) + 1] = tiley;
-			sprites[((x+(y*17))*3) + 2] = grab_tile(worldx+x*16, worldy+y*16);
+			sprites[(x+(y*17))*3 + 2] = tilex;
+			sprites[((x+(y*17))*3) + 1 + 2] = tiley;
+			sprites[((x+(y*17))*3) + 2 + 2] = grab_tile(worldx+x*16, worldy+y*16);
 		}
 	}
 

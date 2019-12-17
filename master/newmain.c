@@ -14,6 +14,7 @@ void update_gamescreen(int* sprite_list){
 	for(int i = 0; i < SCREEN_WIDTH*SCREEN_HEIGHT; i++){
 		gamescreen[i] = 0x0000;
 	}
+	sprite_list+=2;//remove this when stuff works
 
 	for(int i = 0; i < 816; i+=3){
 		int x = *(sprite_list+i);
