@@ -7,12 +7,16 @@
 int worldx;
 int worldy;
 
+int* loaded_tiles[64];
+
 int* grab_sprites();
 
 void shift_screen_left(void);
 void shift_screen_right(void);
 void shift_screen_up(void);
 void shift_screen_down(void);
+
+void set_tile(int tilenum, int* img, int* pal);
 
 int is_solid(int xpos, int ypos);
 

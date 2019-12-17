@@ -28,10 +28,9 @@ void update_gamescreen(int* sprite_list){
 			for(int c = 0; c < 16; c++){
 				if(x+c < 0 || x+c > SCREEN_WIDTH-1){
 					continue;
-				} else if(tile == 1){
-					gamescreen[x+c + (y+r)*SCREEN_WIDTH] = 0x311F;
 				} else {
-					gamescreen[x+c + (y+r)*SCREEN_WIDTH] = 0x33E8;
+					int palsel = *(loaded_tiles[tile*2] + c + r*512);
+					gamescreen[x+c + (y+r)*SCREEN_WIDTH] = *(palettes + palsel);
 				}
 			}
 		}

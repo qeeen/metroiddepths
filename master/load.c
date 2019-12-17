@@ -1,10 +1,11 @@
 #include "load.h"
+#include <stdio.h>
 #include <stdlib.h>
 
 int* get_pixels(){
 	int sheet_size = SPRITESHEET_DIM*SPRITESHEET_DIM * SPRITE_DIM*SPRITE_DIM;
-	IMG_Init(IMG_INIT_PNG);
-	
+    IMG_Init(IMG_INIT_PNG);
+
 	SDL_Surface* sheet = IMG_Load("spritesheet.png");
 	unsigned char* pixels = (unsigned char*)sheet->pixels;
 	

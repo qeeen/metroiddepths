@@ -10,9 +10,10 @@ int worldx = 0;
 int worldy = 0;
 
 int* grab_sprites(){
-    //world limits, needs to be moved somewhere more appropriate later
-    if(worldx < 0) {worldx = 0;}
-    if(worldy < 0) {worldy = 0;}
+	//world limits, needs to be moved somewhere more appropriate later
+	if(worldx < 0) {worldx = 0;}
+	if(worldy < 0) {worldy = 0;}
+	
 
 	int *sprites = malloc(816 * sizeof(int));
 	
@@ -64,6 +65,11 @@ unsigned char* grab_tile_ptr(int xpos, int ypos){
 	unsigned char *chunk = map[cxpos + 64*cypos];
 	unsigned char *tile = chunk + (rxpos + 16*rypos);
 	return tile;
+}
+
+void set_tile(int tilenum, int* img, int* pal){
+	loaded_tiles[tilenum*2] = img;
+	loaded_tiles[tilenum*2 + 1] = pal;
 }
 
 void test_init(){
