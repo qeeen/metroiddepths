@@ -1,12 +1,12 @@
-#include "load.h"
 #include "cart.h"
+#include "load.h"
+#include "dyna.h"
 #include "stdnes.h"
 #include "tiles.h"
 #include <stdio.h>
 #include <stdlib.h>
 
 int cart_init(int* spritesheet, int* palettes){
-
 	spritesheet = get_pixels();
 
 	*(palettes + 0) = 0x671F;
@@ -16,8 +16,6 @@ int cart_init(int* spritesheet, int* palettes){
 
 	set_tile(0, spritesheet + 32, palettes);
 	set_tile(1, spritesheet + 16, palettes);
-
-//	printf("%d, %d, %d, %d\n", *(spritesheet + 0), *(spritesheet + 1), *(spritesheet + 2), *(spritesheet + 3));
 
 	test_init();
 	return 0;

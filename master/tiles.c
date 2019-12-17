@@ -35,14 +35,7 @@ int* grab_sprites(){
 }
 
 int is_solid(int xpos, int ypos){
-	int cxpos = xpos/SCREEN_WIDTH;
-	int cypos = ypos/SCREEN_HEIGHT;
-	int rxpos = xpos%SCREEN_WIDTH;
-	int rypos = ypos%SCREEN_HEIGHT;
-
-	unsigned char *chunk = map[cxpos + 64*cypos];
-	unsigned char tile = chunk[rxpos + 16*rypos];
-	return (tile & 0x80 != 0) ? 1 : 0;
+	return 0;
 }
 
 unsigned char grab_tile(int xpos, int ypos){
@@ -57,14 +50,7 @@ unsigned char grab_tile(int xpos, int ypos){
 }
 
 unsigned char* grab_tile_ptr(int xpos, int ypos){	
-	int cxpos = xpos/256;
-	int cypos = ypos/240;
-	int rxpos = xpos%256;
-	int rypos = ypos%240;
-
-	unsigned char *chunk = map[cxpos + 64*cypos];
-	unsigned char *tile = chunk + (rxpos + 16*rypos);
-	return tile;
+	return NULL;
 }
 
 void set_tile(int tilenum, int* img, int* pal){

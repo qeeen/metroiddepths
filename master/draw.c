@@ -52,8 +52,7 @@ void draw_15bit_pixel_arr(int x, int y, int* rgb){
 	*(pixels + x*4 + (y*4)*SCREEN_WIDTH*SCALE) = rgb[0];
 	*(pixels + x*4 + (y*4)*SCREEN_WIDTH*SCALE+1) = rgb[1];
 	*(pixels + x*4 + (y*4)*SCREEN_WIDTH*SCALE+2) = rgb[2];
-	*(pixels + x*4 + (y*4)*SCREEN_WIDTH*SCALE+3) = 255;
-	
+	*(pixels + x*4 + (y*4)*SCREEN_WIDTH*SCALE+3) = 255;	
 }
 
 /*
@@ -151,13 +150,18 @@ int* handle_input(){
 }
 
 void draw_loop(int *screen){
-	SDL_LockSurface(screenarr);
-	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
+	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 	SDL_RenderClear(renderer);
+	SDL_FillRect(screenarr, NULL, 0);
+
+	SDL_LockSurface(screenarr);
 
 	for(int i = 0; i < SCREEN_HEIGHT; i++){
 		for(int k = 0; k < SCREEN_WIDTH; k++){
 			int* rgb = byte_color(screen[k + i*SCREEN_WIDTH]);
+			if(rgb[0] + rgb[1] + rgb[2] == 0){
+				continue;
+			}
 			for(int px = 0; px < SCALE; px++){
 				for(int py = 0; py < SCALE; py++){
 					draw_15bit_pixel_arr(k*SCALE+px, i*SCALE+py, rgb);
