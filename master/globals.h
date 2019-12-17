@@ -1,6 +1,6 @@
 #define SCREEN_WIDTH 256
 #define SCREEN_HEIGHT 240
-#define SCALE 1
+#define SCALE 3
 
 #define SPRITESHEET_DIM 64
 #define SPRITE_DIM 8

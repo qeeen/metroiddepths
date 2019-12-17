@@ -46,6 +46,16 @@ void draw_15bit_pixel(int x, int y, int color){
 	//draw_pixel(x, y, rgb[0], rgb[1], rgb[2]);
 }
 
+void draw_15bit_pixel_arr(int x, int y, int* rgb){
+	unsigned char* pixels = screenarr->pixels;
+	
+	*(pixels + x*4 + (y*4)*SCREEN_WIDTH*SCALE) = rgb[0];
+	*(pixels + x*4 + (y*4)*SCREEN_WIDTH*SCALE+1) = rgb[1];
+	*(pixels + x*4 + (y*4)*SCREEN_WIDTH*SCALE+2) = rgb[2];
+	*(pixels + x*4 + (y*4)*SCREEN_WIDTH*SCALE+3) = 255;
+	
+}
+
 /*
 void draw_sprite(byte x, byte y, byte width, byte height, byte pixels[]){
 	for(int i = 0; i < height; i++){
@@ -145,33 +155,22 @@ void draw_loop(int *screen){
 	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
 	SDL_RenderClear(renderer);
 
-	printf("%d\n", SDL_GetTicks());
-
 	for(int i = 0; i < SCREEN_HEIGHT; i++){
 		for(int k = 0; k < SCREEN_WIDTH; k++){
+			int* rgb = byte_color(screen[k + i*SCREEN_WIDTH]);
 			for(int px = 0; px < SCALE; px++){
 				for(int py = 0; py < SCALE; py++){
-					draw_15bit_pixel(k*SCALE+px, i*SCALE+py, screen[k + i*SCREEN_WIDTH]);
-					//unsigned char* pixels = screenarr->pixels;
-					//printf("%d, %d, %d, %d\n", *(pixels), *(pixels+1), *(pixels+2), *(pixels+3));
+					draw_15bit_pixel_arr(k*SCALE+px, i*SCALE+py, rgb);
 				}
 			}
 		}
 	}
 	SDL_UnlockSurface(screenarr);
 
-	printf("%d\n\n", SDL_GetTicks());
-	/*
-	SDL_Surface* winsurface = SDL_GetWindowSurface(window);
-	SDL_BlitSurface(screenarr, NULL, winsurface, NULL);
-	SDL_UpdateWindowSurface(window);
-	*/
 	SDL_Texture* tex = SDL_CreateTextureFromSurface(renderer, screenarr);
 	SDL_RenderCopy(renderer, tex, NULL, NULL);
 	SDL_DestroyTexture(tex);
 	SDL_RenderPresent(renderer);
-
-	//printf("%d\n", timeleft());
 
 	SDL_Delay(timeleft());
 	if(timeleft() == 0){
