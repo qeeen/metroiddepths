@@ -13,7 +13,7 @@ int cart_init(int* spritesheet, int* palettes){
 	*(palettes + 0) = 0x671F;
 	*(palettes + 1) = 0x03FF;
 	*(palettes + 2) = 0x7FFF;
-	*(palettes + 3) = 0x0000;
+	*(palettes + 3) = 0x0000;//bg (transparency)
 
 	set_tile(0, spritesheet + 32, palettes);
 	set_tile(1, spritesheet + 16, palettes);

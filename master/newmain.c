@@ -58,6 +58,9 @@ void update_gamescreen(int* sprite_list){
 					continue;
 				} else {
 					int palsel = *(cur_dyna->img + c + r*512);
+					if(palsel == 3){
+						continue;
+					}
 					gamescreen[x+c + (y+r)*SCREEN_WIDTH] = *(palettes + palsel);
 				}
 			}
