@@ -30,6 +30,7 @@ int cart_init(int* spritesheet, int* palettes){
 	return 0;
 }
 
+//important to note, this is run on loop
 int* cartmain(int* spritesheet, int* palettes, int* inputs){
 	int *spritebox;//818
 
@@ -50,7 +51,7 @@ int* cartmain(int* spritesheet, int* palettes, int* inputs){
 	
 	spritebox = grab_sprites();
 
-	//this code needs to be moved, realloc is slow
+	//this code needs to be moved/changed, realloc is slow
 	*(spritebox + 1) = 1;
 	spritebox = realloc(spritebox, sizeof(int)*(*(spritebox + 0)*3 + *(spritebox + 1)*3 + 2));
 	*(spritebox + *(spritebox+0)*3 + 2 + 0) = testsprite->x;
