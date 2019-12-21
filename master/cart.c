@@ -1,13 +1,11 @@
 #include "cart.h"
 #include "load.h"
-#include "dyna.h"
 #include "stdnes.h"
 #include "tiles.h"
 #include <stdio.h>
 #include <stdlib.h>
 
 dyna* testsprite = NULL;
-dyna* dynaarr[1];
 
 int cart_init(int* spritesheet, int* palettes){
 	spritesheet = get_pixels();
@@ -56,8 +54,8 @@ int* cartmain(int* spritesheet, int* palettes, int* inputs){
 	*(spritebox + 1) = 1;
 	spritebox = realloc(spritebox, sizeof(int)*(*(spritebox + 0)*3 + *(spritebox + 1)*3 + 2));
 	*(spritebox + *(spritebox+0)*3 + 2 + 0) = testsprite->x;
-	*(spritebox + *(spritebox+0)*3 + 2 + 0) = testsprite->y;
-	*(spritebox + *(spritebox+0)*3 + 2 + 0) = 4;
+	*(spritebox + *(spritebox+0)*3 + 2 + 1) = testsprite->y;
+	*(spritebox + *(spritebox+0)*3 + 2 + 2) = 0;
 
 	return spritebox;
 }

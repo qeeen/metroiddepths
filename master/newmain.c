@@ -1,4 +1,5 @@
 #include "globals.h"
+#include "dyna.h"
 #include "draw.h"
 #include "stdnes.h"
 #include "cart.h"
@@ -14,9 +15,12 @@ void update_gamescreen(int* sprite_list){
 	for(int i = 0; i < SCREEN_WIDTH*SCREEN_HEIGHT; i++){
 		gamescreen[i] = 0x0000;
 	}
+
+	int tile_count = sprite_list[0];
+	int dyna_count = sprite_list[1];
 	sprite_list+=2;//remove this when stuff works
 
-	for(int i = 0; i < 816; i+=3){
+	for(int i = 0; i < tile_count*3; i+=3){
 		int x = *(sprite_list+i);
 		int y = *(sprite_list+i+1);
 		int tile = *(sprite_list+i+2);
@@ -30,11 +34,35 @@ void update_gamescreen(int* sprite_list){
 				if(x+c < 0 || x+c > SCREEN_WIDTH-1){
 					continue;
 				} else {
-					int palsel = *(loaded_tiles[tile*2] + c + r*512);
+					int palsel = *(loaded_tiles[tile*2] + c + r*512);//value, 1-4 for each pixel
 					gamescreen[x+c + (y+r)*SCREEN_WIDTH] = *(palettes + palsel);
 				}
 			}
 		}
+	}
+
+	sprite_list += tile_count*3;
+	
+	for(int i = 0; i < dyna_count*3; i+=3){
+		int x = *(sprite_list+i);
+		int y = *(sprite_list+i+1);
+		dyna* cur_dyna = dynaarr[*(sprite_list+i+2)];
+
+		for(int r = 0; r < 8; r++){
+			if(y+r < 0 || y+r > SCREEN_HEIGHT-1){
+				continue;
+			}
+
+			for(int c = 0; c < 8; c++){
+				if(x+c < 0 || x+c > SCREEN_WIDTH-1){
+					continue;
+				} else {
+					int palsel = *(cur_dyna->img + c + r*512);
+					gamescreen[x+c + (y+r)*SCREEN_WIDTH] = *(palettes + palsel);
+				}
+			}
+		}
+		
 	}
 }
 
