@@ -1,28 +1,39 @@
 #ifndef TILES_H
 #define TILES_H
 
-//unsigned char chunks[7680]; 32 16*15 chunks, msb is solidity
-//unsigned char* map[4096]; 64*64 pointers to chunks
+/// HEADERS ///
+#include "globals.h"
+#include "stdnes.h"
+
+#include <stdlib.h>
+#include <stdio.h>
+
+/// FUNCTIONS ///
+void test_init(void);//debug world initialization
+
+//tile getters//
+int* grab_sprites();//get all tile images into an array(needs to be freed)
+int is_solid(int xpos, int ypos);//unfinished
+unsigned char grab_tile(int xpos, int ypos);
+unsigned char* grab_tile_ptr(int xpos, int ypos);//unfinished
+
+//world modifiers//
+void shift_screen_left(int amount);
+void shift_screen_right(int amount);
+void shift_screen_up(int amount);
+void shift_screen_down(int amount);
+
+void set_tile(int tilenum, int* img, int* pal);//changes a loaded tile, not a specific tile on the map
+
+
+/// VARIABLES ///
+int* loaded_tiles[TILE_MAX*2];//2*32 array of image/palette data for tiles that are "loaded into memory"
+
+//world data//
+unsigned char chunks[CHUNK_COUNT * (SCREEN_WIDTH/16)*(SCREEN_HEIGHT/16)];
+unsigned char* map[MAP_DIM * MAP_DIM];
 
 int worldx;
 int worldy;
-
-int* loaded_tiles[64];
-
-int* grab_sprites();
-
-void shift_screen_left(void);
-void shift_screen_right(void);
-void shift_screen_up(void);
-void shift_screen_down(void);
-
-void set_tile(int tilenum, int* img, int* pal);
-
-int is_solid(int xpos, int ypos);
-
-unsigned char grab_tile(int xpos, int ypos);
-unsigned char* grab_tile_ptr(int xpos, int ypos);
-
-void test_init(void);
 
 #endif

@@ -1,28 +1,39 @@
 #include "cart.h"
-#include "load.h"
-#include "stdnes.h"
-#include "tiles.h"
-#include <stdio.h>
-#include <stdlib.h>
 
-dyna* testsprite = NULL;
+dyna* testsprite = NULL;//for debug purposes
+int dyna_p = -1;
+
+void set_palette(int* pal_list, int pal, int color0, int color1, int color2, int color3){
+	*(pal_list + (pal*4) + 0) = color0;
+	*(pal_list + (pal*4) + 1) = color1;
+	*(pal_list + (pal*4) + 2) = color2;
+	*(pal_list + (pal*4) + 3) = color3;
+}
+
+dyna* create_dyna(int* spritesheet, int* palettes, int x, int y, int imgx, int imgy, int pal_loc){
+	dyna* new_dyna = malloc(sizeof(dyna));
+	new_dyna->x = x;
+	new_dyna->y = y;
+	new_dyna->img = spritesheet + imgx + imgy*SPRITESHEET_DIM;
+	new_dyna->pal = palettes + PALETTE_SIZE*pal_loc;
+
+	dyna_p++;
+	if(dyna_p >= DYNA_MAX){
+		return NULL;
+	}
+	dynaarr[dyna_p] = new_dyna;
+	return new_dyna;
+}
 
 int cart_init(int* spritesheet, int* palettes){
 	spritesheet = get_pixels();
 
-	*(palettes + 0) = 0x671F;
-	*(palettes + 1) = 0x03FF;
-	*(palettes + 2) = 0x7FFF;
-	*(palettes + 3) = 0x0000;//bg (transparency)
+	set_palette(palettes, 0, 0x671F, 0x03FF, 0x7FFF, 0x000);
 
 	set_tile(0, spritesheet + 32, palettes);
 	set_tile(1, spritesheet + 16, palettes);
 
-	testsprite = malloc(sizeof(dyna));
-	testsprite->x = 128;
-	testsprite->y = 128;
-	testsprite->img = spritesheet+16;
-	testsprite->pal = palettes;
+	testsprite = create_dyna(spritesheet, palettes, 128, 128, 16, 0, 0);
 
 	dynaarr[0] = testsprite;
 
@@ -31,22 +42,22 @@ int cart_init(int* spritesheet, int* palettes){
 }
 
 //important to note, this is run on loop
-int* cartmain(int* spritesheet, int* palettes, int* inputs){
+int* cart_main(int* spritesheet, int* palettes, int* inputs){
 	int *spritebox;//818
 
 	int dbug_cam_spd = 1;
 
 	if(*(inputs+2)){
-		worldx += dbug_cam_spd;
+		shift_screen_right(dbug_cam_spd);
 	}
 	if(*(inputs+1)){
-		worldx -= dbug_cam_spd;
+		shift_screen_left(dbug_cam_spd);
 	}
 	if(*(inputs+3)){
-		worldy -= dbug_cam_spd;
+		shift_screen_up(dbug_cam_spd);
 	}
 	if(*(inputs+4)){
-		worldy += dbug_cam_spd;
+		shift_screen_down(dbug_cam_spd);
 	}
 	
 	spritebox = grab_sprites();

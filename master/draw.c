@@ -1,8 +1,6 @@
 #include "draw.h"
-//#include "entity.h"
 
-/// FUNCTION IMPLEMENTATIONS ///
-unsigned int timeleft(){
+unsigned int time_left(){
 	unsigned int now;
 	
 	now = SDL_GetTicks();
@@ -54,16 +52,6 @@ void draw_15bit_pixel_arr(int x, int y, int* rgb){
 	*(pixels + x*4 + (y*4)*SCREEN_WIDTH*SCALE+2) = rgb[2];
 	*(pixels + x*4 + (y*4)*SCREEN_WIDTH*SCALE+3) = 255;	
 }
-
-/*
-void draw_sprite(byte x, byte y, byte width, byte height, byte pixels[]){
-	for(int i = 0; i < height; i++){
-		for(int k = 0; k < width; k++){
-			draw_pixel(x+k, y+i, pixels[i*width+k]);
-		}
-	}
-}
-*/
 
 void draw_init(){
 	SDL_Init(SDL_INIT_VIDEO);
@@ -149,7 +137,7 @@ int* handle_input(){
 	return flags;
 }
 
-void draw_loop(int *screen){
+void draw_loop(int* screen){
 	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 	SDL_RenderClear(renderer);
 	SDL_FillRect(screenarr, NULL, 0);
@@ -176,8 +164,8 @@ void draw_loop(int *screen){
 	SDL_DestroyTexture(tex);
 	SDL_RenderPresent(renderer);
 
-	SDL_Delay(timeleft());
-	if(timeleft() == 0){
+	SDL_Delay(time_left());
+	if(time_left() == 0){
 		next_time = SDL_GetTicks();
 	}
 	next_time += tick_interval;

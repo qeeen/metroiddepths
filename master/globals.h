@@ -8,5 +8,8 @@
 #define PALETTE_COUNT 16
 #define PALETTE_SIZE 4
 
+#define DYNA_MAX 64
+#define TILE_MAX 32
+
 #define MAP_DIM 64
 #define CHUNK_COUNT 32

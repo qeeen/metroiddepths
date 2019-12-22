@@ -1,15 +1,13 @@
 #include "load.h"
-#include <stdio.h>
-#include <stdlib.h>
 
 int* get_pixels(){
 	int sheet_size = SPRITESHEET_DIM*SPRITESHEET_DIM * SPRITE_DIM*SPRITE_DIM;
-    IMG_Init(IMG_INIT_PNG);
-
+	IMG_Init(IMG_INIT_PNG);
+	
 	SDL_Surface* sheet = IMG_Load("spritesheet.png");
 	unsigned char* pixels = (unsigned char*)sheet->pixels;
 	
-	int* greyscale = malloc(sizeof(int)* sheet_size);
+	int* greyscale = malloc(sizeof(int) * sheet_size);
 	for(int i = 0; i < sheet_size; i+=4){
 		unsigned char r = *(pixels + i + 0);
 		unsigned char g = *(pixels + i + 1);
@@ -29,7 +27,7 @@ int* get_pixels(){
 			*(greyscale + i/4) = 3;
 		}
 	}
-
+	
 	SDL_FreeSurface(sheet);
 	IMG_Quit();
 	return greyscale;

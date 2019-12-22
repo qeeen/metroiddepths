@@ -1,15 +1,16 @@
-#include "globals.h"
-#include "dyna.h"
 #include "draw.h"
-#include "stdnes.h"
 #include "cart.h"
 #include "tiles.h"
+#include "dyna.h"
+#include "globals.h"
+#include "stdnes.h"
+
 #include <stdlib.h>
 #include <stdio.h>
 
 int gamescreen[SCREEN_WIDTH * SCREEN_HEIGHT];
 int* spritesheet;//[SPRITESHEET_DIM*SPRITESHEET_DIM * SPRITE_DIM*SPRITE_DIM] 64*64 grid of 8*8 sprites
-int palettes[PALETTE_COUNT * PALETTE_SIZE];//16 4 color palettes
+int palettes[PALETTE_COUNT * PALETTE_SIZE];//16*4 color palettes
 
 void update_gamescreen(int* sprite_list){
 	for(int i = 0; i < SCREEN_WIDTH*SCREEN_HEIGHT; i++){
@@ -69,7 +70,7 @@ void update_gamescreen(int* sprite_list){
 	}
 }
 
-int main(int argc, char *argv[]){
+int main(int argc, char* argv[]){
 	draw_init();
 	int* inputs;
 	int* spritebox;
@@ -80,7 +81,7 @@ int main(int argc, char *argv[]){
 		if(inputs[0] == 1){
 			break;
 		}
-		spritebox = cartmain(spritesheet, palettes, inputs);
+		spritebox = cart_main(spritesheet, palettes, inputs);
 		update_gamescreen(spritebox);
 		draw_loop(gamescreen);
 		free(spritebox);

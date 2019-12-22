@@ -1,19 +1,9 @@
-#include "globals.h"
 #include "tiles.h"
-#include <stdlib.h>
-#include <stdio.h>
-
-unsigned char chunks[CHUNK_COUNT * (SCREEN_WIDTH/16)*(SCREEN_HEIGHT/16)];
-unsigned char* map[MAP_DIM * MAP_DIM];
 
 int worldx = 0;
 int worldy = 0;
 
 int* grab_sprites(){
-	//world limits, needs to be moved somewhere more appropriate later
-	if(worldx < 0) {worldx = 0;}
-	if(worldy < 0) {worldy = 0;}
-	
 	int *sprites = malloc(818 * sizeof(int));
 	
 	int worldx_offset = worldx%16;
@@ -70,20 +60,24 @@ void test_init(){
 	}
 }
 
-void shift_screen_left(){
-	worldx++;
+void shift_screen_left(int amount){
+	worldx -= amount;
+	if(worldx > MAP_DIM*SCREEN_WIDTH) {worldx = MAP_DIM*SCREEN_WIDTH;}
 }
 
-void shift_screen_right(){
-	worldx--;
+void shift_screen_right(int amount){
+	worldx += amount;
+	if(worldx < 0) {worldx = 0;}
 }
 
-void shift_screen_up(){
-	worldy--;
+void shift_screen_up(int amount){
+	worldy -= amount;
+	if(worldy < 0) {worldy = 0;}
 }
 
-void shift_screen_down(){
-	worldx++;
+void shift_screen_down(int amount){
+	worldy += amount;
+	if(worldy > MAP_DIM*SCREEN_HEIGHT) {worldy = MAP_DIM*SCREEN_HEIGHT;}
 }
 
 
