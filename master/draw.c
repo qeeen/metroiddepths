@@ -44,12 +44,19 @@ void draw_15bit_pixel(int x, int y, int color){
 	//draw_pixel(x, y, rgb[0], rgb[1], rgb[2]);
 }
 
-void draw_15bit_pixel_arr(int x, int y, int* rgb){
+void draw_pixel_arr(int x, int y, int rgb){
+	int split_rgb[3];
+	//printf("%x\n", rgb);
+	split_rgb[0] = rgb/65536;
+	split_rgb[1] =  rgb/256 - split_rgb[0]*256;
+	split_rgb[2] = rgb%256;
+
 	unsigned char* pixels = screenarr->pixels;
 	
-	*(pixels + x*4 + (y*4)*SCREEN_WIDTH*SCALE) = rgb[0];
-	*(pixels + x*4 + (y*4)*SCREEN_WIDTH*SCALE+1) = rgb[1];
-	*(pixels + x*4 + (y*4)*SCREEN_WIDTH*SCALE+2) = rgb[2];
+	//SDL reads color bgra because its rarted
+	*(pixels + x*4 + (y*4)*SCREEN_WIDTH*SCALE+0) = split_rgb[2];
+	*(pixels + x*4 + (y*4)*SCREEN_WIDTH*SCALE+1) = split_rgb[1];
+	*(pixels + x*4 + (y*4)*SCREEN_WIDTH*SCALE+2) = split_rgb[0];
 	*(pixels + x*4 + (y*4)*SCREEN_WIDTH*SCALE+3) = 255;	
 }
 
@@ -146,13 +153,10 @@ void draw_loop(int* screen){
 
 	for(int i = 0; i < SCREEN_HEIGHT; i++){
 		for(int k = 0; k < SCREEN_WIDTH; k++){
-			int* rgb = byte_color(screen[k + i*SCREEN_WIDTH]);
-			if(rgb[0] + rgb[1] + rgb[2] == 0){
-				continue;
-			}
+			int rgb = screen[k + i*SCREEN_WIDTH];
 			for(int px = 0; px < SCALE; px++){
 				for(int py = 0; py < SCALE; py++){
-					draw_15bit_pixel_arr(k*SCALE+px, i*SCALE+py, rgb);
+					draw_pixel_arr(k*SCALE+px, i*SCALE+py, rgb);
 				}
 			}
 		}

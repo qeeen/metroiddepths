@@ -36,7 +36,8 @@ void update_gamescreen(int* sprite_list){
 					continue;
 				} else {
 					int palsel = *(loaded_tiles[tile*2] + c + r*512);//value, 1-4 for each pixel
-					gamescreen[x+c + (y+r)*SCREEN_WIDTH] = *(palettes + palsel);
+					int* pal = loaded_tiles[tile*2+1];
+					gamescreen[x+c + (y+r)*SCREEN_WIDTH] = *(pal + palsel);
 				}
 			}
 		}
@@ -62,7 +63,8 @@ void update_gamescreen(int* sprite_list){
 					if(palsel == 3){
 						continue;
 					}
-					gamescreen[x+c + (y+r)*SCREEN_WIDTH] = *(palettes + palsel);
+					int* pal = cur_dyna->pal;
+					gamescreen[x+c + (y+r)*SCREEN_WIDTH] = *(pal + palsel);
 				}
 			}
 		}

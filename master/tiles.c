@@ -62,12 +62,12 @@ void test_init(){
 
 void shift_screen_left(int amount){
 	worldx -= amount;
-	if(worldx > MAP_DIM*SCREEN_WIDTH) {worldx = MAP_DIM*SCREEN_WIDTH;}
+	if(worldx < 0) {worldx = 0;}
 }
 
 void shift_screen_right(int amount){
 	worldx += amount;
-	if(worldx < 0) {worldx = 0;}
+	if(worldx > MAP_DIM*SCREEN_WIDTH) {worldx = MAP_DIM*SCREEN_WIDTH;}
 }
 
 void shift_screen_up(int amount){

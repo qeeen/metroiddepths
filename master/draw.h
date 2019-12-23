@@ -7,6 +7,7 @@
 
 #define SDL_MAIN_HANDLED//tells sdl that I have my own main
 #include <SDL2/SDL.h>
+#include <stdio.h>
 
 /// VARIABLES ///
 
@@ -29,6 +30,7 @@ unsigned int time_left(void);
 int* byte_color(int color);
 void draw_pixel(int x, int y, int r, int g, int b);
 void draw_15bitpixel(int x, int y, int color);
+void draw_pixel_arr(int x, int y, int rgb);
 
 //ui control//
 void draw_init(void);
