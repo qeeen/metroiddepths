@@ -3,6 +3,7 @@
 
 /// HEADERS ///
 #include "dyna.h"
+#include "body.h"
 #include "load.h"
 #include "tiles.h"
 #include "globals.h"

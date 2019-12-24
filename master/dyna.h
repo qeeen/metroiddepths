@@ -9,6 +9,7 @@
 typedef struct{//dynamic sprite
 	int* pal;
 	int* img;
+	int modifier;//mirror, rotate, etc... needs to be read by newmain
 	unsigned char x, y;
 } dyna;
 
