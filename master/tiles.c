@@ -55,6 +55,9 @@ void test_init(){
 	for(int i = 0; i < 240; i++){
 		chunks[240+i] = 0;
 	}
+	for(int i = 0; i < 32; i++){
+		chunks[240+16*13 + i] = 1;
+	}
 	for(int i = 0; i < 4096; i++){
 		map[i] = ((i + i/64) % 2) ? chunks : chunks + 240;
 	}

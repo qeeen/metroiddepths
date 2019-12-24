@@ -28,6 +28,14 @@ int overlaps_bulk(int froml, dyna* from, int tol, dyna* to){
 	return 0;
 }
 
+void move_bulk(dyna** list, int c, int xdis, int ydis){
+	for(int i = 0; i < c; i++){
+		dyna* current = list[i];
+		current->x += xdis;
+		current->y += ydis;
+	}
+}
+
 void move_clump(clump* cl, int xdis, int ydis){
 	
 }

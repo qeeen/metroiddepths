@@ -27,6 +27,7 @@ typedef struct{//group of clumps, for animation
 //dyna functions//
 int overlaps(dyna* from, dyna* to);
 int overlaps_bulk(int froml, dyna* from, int tol, dyna* to);
+void move_bulk(dyna** list, int c, int xdis, int ydis);
 
 //clump functions//
 void move_clump(clump* cl, int xdis, int ydis);
