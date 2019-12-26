@@ -19,7 +19,7 @@ void update_gamescreen(int* sprite_list){
 
 	int tile_count = sprite_list[0];
 	int dyna_count = sprite_list[1];
-	sprite_list+=2;//remove this when stuff works
+	sprite_list+=2;
 
 	for(int i = 0; i < tile_count*3; i+=3){
 		int x = *(sprite_list+i);

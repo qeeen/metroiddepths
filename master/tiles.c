@@ -2,6 +2,7 @@
 
 int worldx = 0;
 int worldy = 0;
+int layer_size = CHUNK_COUNT * (SCREEN_WIDTH/16)*(SCREEN_HEIGHT/16);
 
 int* grab_sprites(){
 	int *sprites = malloc(818 * sizeof(int));
@@ -18,7 +19,9 @@ int* grab_sprites(){
 			sprites[(x+(y*17))*3 + 2] = tilex;
 			sprites[((x+(y*17))*3) + 1 + 2] = tiley;
 			sprites[((x+(y*17))*3) + 2 + 2] = grab_tile(worldx+x*16, worldy+y*16);
+			//printf("%d", grab_tile(worldx+x*16, worldy+y*16));
 		}
+		//printf("\n");
 	}
 
 	return sprites;
@@ -35,7 +38,9 @@ unsigned char grab_tile(int xpos, int ypos){
 	int rypos = (ypos%SCREEN_HEIGHT)/16;
 
 	unsigned char *chunk = map[cxpos + 64*cypos];
-	unsigned char tile = *(chunk + rxpos + 16*rypos);
+	unsigned char layer = *(chunk + rxpos + 16*rypos);
+	unsigned char tile = *(chunk + layer_size*layer + rxpos + 16*rypos);
+
 	return tile;
 }
 
@@ -53,11 +58,16 @@ void test_init(){
 		chunks[i] = 1;
 	}
 	for(int i = 0; i < 240; i++){
-		chunks[240+i] = 0;
+		chunks[240+i] = 1;
 	}
 	for(int i = 0; i < 32; i++){
-		chunks[240+16*13 + i] = 1;
+		chunks[240+16*13 + i] = 2;
 	}
+
+	for(int i = 0; i < 32; i++){
+		chunks[layer_size*2 + 240+16*13 + i] = 1;
+	}
+
 	for(int i = 0; i < 4096; i++){
 		map[i] = ((i + i/64) % 2) ? chunks : chunks + 240;
 	}

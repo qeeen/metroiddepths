@@ -30,7 +30,15 @@ void set_tile(int tilenum, int* img, int* pal);//changes a loaded tile, not a sp
 int* loaded_tiles[TILE_MAX*2];//2*32 array of image/palette data for tiles that are "loaded into memory"
 
 //world data//
-unsigned char chunks[CHUNK_COUNT * (SCREEN_WIDTH/16)*(SCREEN_HEIGHT/16)];
+unsigned char chunks[CHUNK_COUNT*4 * (SCREEN_WIDTH/16)*(SCREEN_HEIGHT/16)];
+//4 layers
+//layer 0, shows what layer the tile is on
+//layer 1, background layer
+//layer 2, solid tiles
+//layer 3, dynamic tiles
+
+int layer_size;
+
 unsigned char* map[MAP_DIM * MAP_DIM];
 
 int worldx;
