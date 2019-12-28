@@ -3,6 +3,7 @@
 
 /// HEADERS ///
 #include "dyna.h"
+#include "tiles.h"
 #include "globals.h"
 #include "stdnes.h"
 

@@ -28,7 +28,23 @@ int* grab_sprites(){
 }
 
 int is_solid(int xpos, int ypos){
+	unsigned char layer = grab_layer(xpos, ypos);
+	if(layer == 2){
+		return 1;
+	}
 	return 0;
+}
+
+unsigned char grab_layer(int xpos, int ypos){
+	int cxpos = (int)(xpos/SCREEN_WIDTH);
+	int cypos = (int)(ypos/SCREEN_HEIGHT);
+	int rxpos = (xpos%SCREEN_WIDTH)/16;
+	int rypos = (ypos%SCREEN_HEIGHT)/16;
+
+	unsigned char *chunk = map[cxpos + 64*cypos];
+	unsigned char layer = *(chunk + rxpos + 16*rypos);
+	
+	return layer;
 }
 
 unsigned char grab_tile(int xpos, int ypos){

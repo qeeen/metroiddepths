@@ -9,7 +9,17 @@ void move_body(body* b, int xdis, int ydis){
 
 void auto_body(body* b){
 	b->yspd += b->g;
-	move_body(b, b->xspd, b->yspd);
+	if (b->yspd > b->termv){
+		b->yspd = b->termv;
+	}
+	for(int i = 0; i < b->yspd; i++){
+		if(is_solid(b->x, b->y+32)){
+			b->yspd = 0;
+			break;
+		}
+		move_body(b, 0, 1);
+	}
+	move_body(b, b->xspd, 0);
 }
 
 void xspd_in(body* b, int speed, int l, int r){

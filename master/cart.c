@@ -48,6 +48,8 @@ int cart_init(int* spritesheet, int* palettes){
 	player = malloc(sizeof(body));
 	player->sprites = player_sprite;
 	player->sprite_count = 8;
+	player->g = 1;
+	player->termv = 4;
 	player->x = 128;
 	player->y = 128;
 

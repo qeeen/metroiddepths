@@ -14,6 +14,7 @@ void test_init(void);//debug world initialization
 //tile getters//
 int* grab_sprites();//get all tile images into an array(needs to be freed)
 int is_solid(int xpos, int ypos);//unfinished
+unsigned char grab_layer(int xpos, int ypos);
 unsigned char grab_tile(int xpos, int ypos);
 unsigned char* grab_tile_ptr(int xpos, int ypos);//unfinished
 
