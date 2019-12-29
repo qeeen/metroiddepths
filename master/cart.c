@@ -52,6 +52,8 @@ int cart_init(int* spritesheet, int* palettes){
 	player->termv = 4;
 	player->x = 128;
 	player->y = 128;
+	player->width = 16;
+	player->height = 32;
 
 	test_init();
 	return 0;
@@ -61,8 +63,11 @@ int cart_init(int* spritesheet, int* palettes){
 int* cart_main(int* spritesheet, int* palettes, int* inputs){
 	int *spritebox;//818
 
-	int dbug_cam_spd = 2;
-	xspd_in(player, dbug_cam_spd, *(inputs+1), *(inputs+2));
+	int dbug_cam_spd = 4;
+	xspd_in(player, dbug_cam_spd, inputs[1], inputs[2]);
+	if(inputs[7]){
+		player->yspd = -10;
+	}
 	auto_body(player);
 	
 	spritebox = grab_sprites();

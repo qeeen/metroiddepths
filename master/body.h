@@ -15,6 +15,7 @@ typedef struct {
 	dyna** sprites;
 	int sprite_count;
 	int x, y;
+	int width, height;
 	int xspd, yspd;
 	int speed;
 	int g;

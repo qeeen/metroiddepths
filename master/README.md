@@ -1,5 +1,5 @@
 /// KNOWN BUGS ///  
-none currently   
+input randomly crashes upon starting for some reason  
   
 /// DEPS ///  
 SDL2  
