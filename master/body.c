@@ -12,6 +12,7 @@ void auto_body(body* b){
 	if (b->yspd > b->termv){
 		b->yspd = b->termv;
 	}
+	
 	if(b->yspd > 0){
 		for(int i = 0; i < b->yspd; i++){
 			if(is_solid(b->x, b->y+b->height)){

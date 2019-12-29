@@ -52,6 +52,8 @@ int cart_init(int* spritesheet, int* palettes){
 	player->termv = 4;
 	player->x = 128;
 	player->y = 128;
+	player->xspd = 0;
+	player->yspd = 0;
 	player->width = 16;
 	player->height = 32;
 
