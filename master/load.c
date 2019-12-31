@@ -33,3 +33,22 @@ int* get_pixels(){
 	return greyscale;
 }
 
+int* get_map(void){
+	FILE* map_file = fopen("output.out", "r");
+
+	fseek(map_file, 0, SEEK_END);
+	int size = (int)ftell(map_file);
+	rewind(map_file);
+
+	int* map_data = malloc(sizeof(int)*size + 1);
+	int index = 0;
+	int current_value;
+	while((current_value = fgetc(map_file)) != EOF){
+		if((char)current_value != '\n'){
+			map_data[index] = current_value-33;
+			index++;
+		}
+	}
+	fclose(map_file);
+	return map_data;
+}

@@ -27,8 +27,6 @@ int main(int argc, char** argv){
 		name[5] = (char)(i%10)+48;
 		name[4] = (char)(i/10)+48;
 		images[i] = IMG_Load(name);
-		printf(name);
-		printf("\n");
 	}
 	char* room_data = get_string_form(images, room_count);
 	FILE* output = fopen("output.out", "w+");
@@ -88,7 +86,6 @@ char* get_string_form(SDL_Surface** images, int image_count){
 					string_form[i*241 + k] = 33 + 10;
 					break;
 			}
-			printf("%d, %d, %d\n", i, k, i*241+k);
 		}
 		string_form[(i+1)*240 + i] = '\n';
 	}

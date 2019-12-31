@@ -89,13 +89,32 @@ void test_init(){
 	}
 }
 
+void world_init(int* map_data, int room_count){
+	for(int i = 0; i < 240; i++){
+		chunks[i] = 1;
+	}
+	for(int c = 1; c < room_count+1; c++){
+		for(int i = 0; i < 240; i++){
+			int layer = (map_data[(c-1)*240 + i] == 0) ? 1 : 2;
+			chunks[c*240 + i] = layer;
+			chunks[layer_size*layer + c*240 + i] = map_data[240*(c-1) + i];
+		}
+	}
+	map[0] = chunks + 240 * 1;
+	map[1] = chunks + 240 * 2;
+	map[2] = chunks + 240 * 3;
+	for(int i = 3; i < 4096; i++){
+		map[i] = chunks;
+	}
+}
+
 void shift_screen_left(int amount){
-	worldx -= amount;
+	worldx -= amount*2;
 	if(worldx < 0) {worldx = 0;}
 }
 
 void shift_screen_right(int amount){
-	worldx += amount;
+	worldx += amount*2;
 	if(worldx > MAP_DIM*SCREEN_WIDTH) {worldx = MAP_DIM*SCREEN_WIDTH;}
 }
 

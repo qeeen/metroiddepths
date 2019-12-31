@@ -14,5 +14,6 @@
 //returns the spritesheet as a matrix of values from 0-3, for each color on a palette
 //3 means transparency on dynamic sprites
 int* get_pixels(void);//loads images from "spritesheet.png"
+int* get_map(void);//loads map tiles from "output"
 
 #endif

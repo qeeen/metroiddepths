@@ -34,6 +34,16 @@ int cart_init(int* spritesheet, int* palettes){
 
 	set_tile(0, spritesheet + 0, palettes);
 	set_tile(1, spritesheet + 1*16, palettes);
+	set_tile(2, spritesheet + 1*32, palettes);
+	set_tile(3, spritesheet + 1*48, palettes);
+	set_tile(4, spritesheet + 1*64, palettes);
+	set_tile(5, spritesheet + 1*80, palettes);
+	set_tile(6, spritesheet + 1*96, palettes);
+	set_tile(7, spritesheet + 1*112, palettes);
+	set_tile(8, spritesheet + 1*128, palettes);
+	set_tile(9, spritesheet + 1*144, palettes);
+	set_tile(10, spritesheet + 1*160, palettes);
+
 
 	//should get put into a function to automate
 	player_sprite[0] = create_dyna(spritesheet, palettes, 128, 128, 11*16 + 0*8, 0, 1);
@@ -57,7 +67,10 @@ int cart_init(int* spritesheet, int* palettes){
 	player->width = 16;
 	player->height = 32;
 
-	test_init();
+	int* map_data = get_map();
+	world_init(map_data, 3);//3 is a magic number, add more when more rooms are added
+	free(map_data);
+
 	return 0;
 }
 
@@ -65,12 +78,20 @@ int cart_init(int* spritesheet, int* palettes){
 int* cart_main(int* spritesheet, int* palettes, int* inputs){
 	int *spritebox;//818
 
-	int dbug_cam_spd = 4;
+	int dbug_cam_spd = 2;
 	xspd_in(player, dbug_cam_spd, inputs[1], inputs[2]);
 	if(inputs[7]){
 		player->yspd = -10;
 	}
 	auto_body(player);
+	if(inputs[1]){
+		move_bulk(player->sprites, player->sprite_count, dbug_cam_spd, 0);
+		shift_screen_left(dbug_cam_spd);
+	}
+	if(inputs[2]){
+		move_bulk(player->sprites, player->sprite_count, -dbug_cam_spd, 0);
+		shift_screen_right(dbug_cam_spd);
+	}
 	
 	spritebox = grab_sprites();
 

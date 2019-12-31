@@ -10,6 +10,7 @@
 
 /// FUNCTIONS ///
 void test_init(void);//debug world initialization
+void world_init(int* map_data, int room_count);//actual world initialization
 
 //tile getters//
 int* grab_sprites();//get all tile images into an array(needs to be freed)
